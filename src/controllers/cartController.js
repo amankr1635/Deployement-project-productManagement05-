@@ -43,7 +43,7 @@ const createCart = async function (req, res) {
       let cart = await cartModel.create(data);
       cart = cart.toObject()
       delete cart["__v"]
-      return res.status(201).send({ status: true, data: cart });
+      return res.status(201).send({ status: true,message: "Success", data: cart });
     } else {
       if (!data.cartId)
         return res
@@ -86,7 +86,7 @@ const createCart = async function (req, res) {
       updateCart = updateCart.toObject()
       delete updateCart["__v"] 
       return res
-        .status(200)
+        .status(201)
         .send({ status: true, message: "Success", data: updateCart });
     }
   } catch (error) {
@@ -209,26 +209,7 @@ const updateCart = async function (req, res) {
 const getCart = async function (req, res) {
   try {
     let userId = req.params.userId;
-    let data = req.body;
-    if (Object.keys(data).length == 0)
-      return res
-        .status(400)
-        .send({ status: false, message: "please enter someting" });
-    if (!data.cartId)
-      return res
-        .status(400)
-        .send({ status: false, message: "please enter cartId" });
-    data.cartId = data.cartId.trim();
-    if (data.cartId == "")
-      return res
-        .status(400)
-        .send({ status: false, message: "cartId cannot be empty" });
-    if (!isValidObjectId(data.cartId))
-      return res
-        .status(400)
-        .send({ status: false, message: "please enter valid cartId" });
     let checkCart = await cartModel.findOne({
-      _id: data.cartId,
       userId: userId,
     });
     if (!checkCart)
@@ -246,26 +227,7 @@ const getCart = async function (req, res) {
 const deleteCart = async function (req, res) {
   try {
     let userId = req.params.userId;
-    let data = req.body;
-    if (Object.keys(data).length == 0)
-      return res
-        .status(400)
-        .send({ status: false, message: "please enter someting" });
-    if (!data.cartId)
-      return res
-        .status(400)
-        .send({ status: false, message: "please enter cartId" });
-    data.cartId = data.cartId.trim();
-    if (data.cartId == "")
-      return res
-        .status(400)
-        .send({ status: false, message: "cartId cannot be empty" });
-    if (!isValidObjectId(data.cartId))
-      return res
-        .status(400)
-        .send({ status: false, message: "please enter valid cartId" });
     let checkAvailableCart = await cartModel.findOne({
-      _id: data.cartId,
       userId: userId,
     });
     if (!checkAvailableCart)
@@ -273,7 +235,7 @@ const deleteCart = async function (req, res) {
     if (checkAvailableCart.items.length == 0)
       return res.status(404).send({ status: false, message: "cart not found" });
     let checkCart = await cartModel.findOneAndUpdate(
-      { _id: data.cartId, userId: userId },
+      {userId: userId },
       { items: [], totalPrice: 0, totalItems: 0 },
       { new: true }
     );

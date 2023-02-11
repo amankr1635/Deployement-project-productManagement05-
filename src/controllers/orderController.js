@@ -63,7 +63,7 @@ const createOrder = async function (req, res) {
       { items: [], totalPrice: 0, totalItems: 0 }
     );
     return res
-      .status(200)
+      .status(201)
       .send({ status: true, message: "Success", data: orderCreation });
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
@@ -136,7 +136,7 @@ const updateOrder = async function (req, res) {
     );
      return res
       .status(200)
-      .send({ status: false, message: "Success", data: updatedData });
+      .send({ status: true, message: "Success", data: updatedData });
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }

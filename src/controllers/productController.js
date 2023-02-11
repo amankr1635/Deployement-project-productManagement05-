@@ -159,7 +159,7 @@ const product = async function (req, res) {
     delete createProduct["__v"]
     return res.status(201).send({
       status: true,
-      message: "Product created successfully",
+      message: "Success",
       data: createProduct,
     });
   } catch (error) {
@@ -524,7 +524,7 @@ const deleteProduct = async function (req, res) {
         .status(404)
         .send({ status: false, message: "Product not found" });
 
-    return res.status(200).send({ status: false, message: "Success" });
+    return res.status(200).send({ status: true, message: "Success" });
   } catch (err) {
     return res.status(500).send({ status: false, message: err.message });
   }

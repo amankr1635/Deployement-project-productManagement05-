@@ -24,7 +24,7 @@ const isValidName = function (name) {
 };
 
 const isValidTitle = function (name) {
-  const nameRegex = /^[a-z A-Z_0-9]{3,20}$/;
+  const nameRegex = /^[a-z A-Z_0-9]{3,50}$/;
   return nameRegex.test(name);
 };
 
