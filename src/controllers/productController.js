@@ -42,10 +42,6 @@ const product = async function (req, res) {
             status: false,
             message: `${entries[j][k]} field cannot be empty `,
           });
-        if (Number(data.title.split(" ").join("")) || !isValidTitle(data.title))
-          return res
-            .status(400)
-            .send({ status: false, message: "title is Invalid" });
       }
       if (entries[j][k] == "description") {
         data.description = entries[j][1].trim();
@@ -447,10 +443,6 @@ const updatProduct = async function (req, res) {
               status: false,
               message: `${keys[i]} field cannot be empty `,
             });
-          if (Number(data.style) || !isValidTitle(data.style))
-            return res
-              .status(400)
-              .send({ status: false, message: `${keys[i]} is Invalid` });
         }
         if (keys[i] == "availableSizes") {
           data.availableSizes = data.availableSizes.trim();

@@ -42,19 +42,11 @@ const user = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: " fname can not be empty " });
-    if (!isValidName(data.fname))
-      return res
-        .status(400)
-        .send({ status: false, message: "fname is Invalid" });
     data.lname = data.lname.trim();
     if (data.lname == "")
       return res
         .status(400)
         .send({ status: false, message: " lname can not be empty " });
-    if (!isValidName(data.lname))
-      return res
-        .status(400)
-        .send({ status: false, message: "lname is Invalid" });
     data.email = data.email.trim().toLowerCase();
     if (data.email == "")
       return res
@@ -64,12 +56,6 @@ const user = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: "email is Invalid" });
-    if (!isValidImage(data.files[0].originalname))
-      return res.status(400).send({
-        status: false,
-        message:
-          "Image format is Invalid please provide .jpg or .png or .jpeg format",
-      });
     data.phone = data.phone.trim();
     if (data.phone == "")
       return res
@@ -97,13 +83,6 @@ const user = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: " password can not be empty " });
-    if (!passwordVal(data.password))
-      return res.status(400).send({
-        status: false,
-        message:
-          "Password must be at least 1 lowercase, at least 1 uppercase,contain at least 1 numeric character , at least one special character, range between 8-15",
-      });
-
     if (!isValidAddress(data.address))
       return res
         .status(400)
@@ -300,10 +279,6 @@ const updateUser = async function (req, res) {
         return res
           .status(400)
           .send({ status: false, message: " fname can not be empty " });
-      if (!isValidName(data.fname))
-        return res
-          .status(400)
-          .send({ status: false, message: "fname is Invalid" });
       obj.fname = data.fname;
     }
     if (data.lname || data.lname == "") {
@@ -312,10 +287,6 @@ const updateUser = async function (req, res) {
         return res
           .status(400)
           .send({ status: false, message: " lname can not be empty " });
-      if (!isValidName(data.lname))
-        return res
-          .status(400)
-          .send({ status: false, message: "lname is Invalid" });
       obj.lname = data.lname;
     }
     if (data.email || data.email == "") {
@@ -389,12 +360,6 @@ const updateUser = async function (req, res) {
         return res
           .status(400)
           .send({ status: false, message: " password can not be empty " });
-      if (!passwordVal(data.password))
-        return res.status(400).send({
-          status: false,
-          message:
-            "Password must be at least 1 lowercase, at least 1 uppercase,contain at least 1 numeric character , at least one special character, range between 8-15",
-        });
       const saltRounds = data.password.length;
       let hash = await bcrypt.hash(data.password, saltRounds);
       obj.password = hash;
